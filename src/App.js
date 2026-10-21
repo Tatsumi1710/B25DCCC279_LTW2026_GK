@@ -12,7 +12,15 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // 1. Tải dữ liệu: kiểm tra localStorage trước, nếu không có mới gọi API
   useEffect(() => {
+    const savedTasks = localStorage.getItem('gk_tasks');
+    if (savedTasks) {
+      setTasks(JSON.parse(savedTasks));
+      setLoading(false);
+      return;
+    }
+
     const controller = new AbortController();
 
     axios
@@ -32,6 +40,13 @@ const App = () => {
       controller.abort();
     };
   }, []);
+
+  // 2. Lưu dữ liệu vào localStorage mỗi khi tasks thay đổi (chỉ lưu sau khi đã tải xong)
+  useEffect(() => {
+    if (!loading) {
+      localStorage.setItem('gk_tasks', JSON.stringify(tasks));
+    }
+  }, [tasks, loading]);
 
   const handleToggleStatus = (id) => {
     setTasks((prevTasks) =>
