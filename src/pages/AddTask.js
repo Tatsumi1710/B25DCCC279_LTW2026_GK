@@ -25,8 +25,16 @@ const AddTask = ({ onAddTask }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!title.trim() || !assignee.trim() || !hours.toString().trim()) {
+    // 1. Kiểm tra ô trống
+    if (!title.trim() || !assignee.trim() || hours.toString().trim() === '') {
       setError('Vui lòng nhập đầy đủ thông tin');
+      return;
+    }
+
+    // 2. Kiểm tra số giờ: phải là số nguyên từ 1 đến 40
+    const numHours = Number(hours);
+    if (!Number.isInteger(numHours) || numHours < 1 || numHours > 40) {
+      setError('Số giờ phải từ 1 đến 40');
       return;
     }
 
@@ -34,7 +42,7 @@ const AddTask = ({ onAddTask }) => {
       title: title.trim(),
       assignee: assignee.trim(),
       priority,
-      hours: Number(hours),
+      hours: numHours,
       done: false
     };
 
