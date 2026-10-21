@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import WorkTimer from '../components/WorkTimer';
 
 const TaskDetail = ({ tasks }) => {
   const { id } = useParams();
@@ -22,6 +23,7 @@ const TaskDetail = ({ tasks }) => {
   return (
     <div>
       <h2>Chi tiết công việc</h2>
+      <WorkTimer />
       <p>{`Tên công việc: ${title}`}</p>
       <p>{`Người làm: ${assignee}`}</p>
       <p>{`Mức ưu tiên: ${priority}`}</p>
