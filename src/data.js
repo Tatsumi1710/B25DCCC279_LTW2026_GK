@@ -1,0 +1,1 @@
+export const PRIORITIES = ["Cao", "Trung Bình", 'Thấp'];
